@@ -1,0 +1,13 @@
+{
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "Autoclose HTML",
+          "submenu": [{ "label": "Toggle", "command": "autoclose-html:toggle" }]
+        }
+      ]
+    }
+  ]
+}

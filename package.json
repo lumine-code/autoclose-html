@@ -1,42 +1,128 @@
 {
   "name": "autoclose-html",
-  "author": {
-    "name": "Matt Berkowitz"
+  "author": "lumine-code",
+  "description": "Close HTML and XML tags automatically as you type.",
+  "repository": "https://github.com/lumine-code/autoclose-html",
+  "bugs": {
+    "url": "https://github.com/lumine-code/autoclose-html/issues"
   },
-  "main": "./lib/autoclose-html",
-  "version": "0.24.0",
-  "private": true,
-  "description": "Automates closing of HTML Tags",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mattberkowitz/autoclose-html"
-  },
+  "keywords": [
+    "jsx",
+    "erb",
+    "xml",
+    "tag",
+    "markup"
+  ],
+  "version": "1.0.0",
   "license": "MIT",
   "engines": {
-    "atom": ">0.50.0"
+    "lumine": "^1.0.0"
   },
-  "dependencies": {},
-  "contributors": [
-    {
-      "name": "Evan Hahn",
-      "email": "me@evanhahn.com",
-      "url": "http://evanhahn.com"
-    },
-    {
-      "name": "Mat Silva",
-      "email": "askmatsilva@.com",
-      "url": "https://github.com/matsilva"
-    }
+  "backgroundTips": [
+    "You can have a closing tag written for you as soon as you finish typing an opening one."
   ],
-  "readmeFilename": "README.md",
-  "bugs": {
-    "url": "https://github.com/mattberkowitz/autoclose-html/issues"
+  "main": "./lib/main",
+  "files": [
+    "lib",
+    "menus",
+    "spec"
+  ],
+  "scripts": {
+    "test": "lumine --test spec",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
-  "homepage": "https://github.com/mattberkowitz/autoclose-html",
-  "_id": "autoclose-html@0.8.0",
-  "dist": {
-    "shasum": "25792d1cf3395393c861bfcb919fe684f505af85"
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-n": "^18.2.2",
+    "globals": "^17.9.0",
+    "prettier": "^3.9.6"
   },
-  "_resolved": "C:\\Users\\msilva\\AppData\\Local\\Temp\\d-114711-6236-8rgida\\package.tgz",
-  "_from": "C:\\Users\\msilva\\AppData\\Local\\Temp\\d-114711-6236-8rgida\\package.tgz"
+  "configSchema": {
+    "enabled": {
+      "title": "Enabled",
+      "description": "Write the closing tag as soon as an opening tag is typed.",
+      "type": "boolean",
+      "default": true
+    },
+    "grammars": {
+      "title": "Grammars",
+      "description": "Scope names of the grammars that get closing tags. `source.js` is left out by default because a comparison such as `a < b > c` reads as a tag.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "text.html.basic",
+        "text.html.ejs",
+        "text.html.erb",
+        "text.html.mustache",
+        "text.html.php",
+        "text.xml",
+        "text.xml.xsl",
+        "source.tsx"
+      ]
+    },
+    "forceInline": {
+      "title": "Force Inline",
+      "description": "Elements whose closing tag stays on the same line even though they are block by default. Use `*` to keep every closing tag inline.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "title",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6"
+      ]
+    },
+    "forceBlock": {
+      "title": "Force Block",
+      "description": "Elements whose closing tag moves to its own line even though they are inline by default. Ignored when Force Inline is `*`.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "head"
+      ]
+    },
+    "neverClose": {
+      "title": "Never Close Elements",
+      "description": "Elements that take no closing tag.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "area",
+        "base",
+        "br",
+        "col",
+        "embed",
+        "hr",
+        "img",
+        "input",
+        "link",
+        "meta",
+        "param",
+        "source",
+        "track",
+        "wbr"
+      ]
+    },
+    "makeNeverCloseSelfClosing": {
+      "title": "Make Never Close Elements Self-Closing",
+      "description": "Rewrite an element that takes no closing tag to close itself, so `<br>` becomes `<br />`.",
+      "type": "boolean",
+      "default": true
+    }
+  }
 }

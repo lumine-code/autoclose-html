@@ -1,73 +1,45 @@
-# Auto Close HTML package for Atom Text Editor
+# autoclose-html
 
-Will automatically add closing tags when you complete the opening tag.
+Close HTML and XML tags automatically as you type.
 
-# Installation
+Finish an opening tag and its closing tag appears behind the cursor. Block
+elements get theirs on a line of its own with the cursor waiting, indented,
+between the two; inline elements get theirs right where the cursor already is.
 
-Install using
+## Features
 
-`apm install autoclose-html`
+- **Automatic closing**: writes the closing tag the moment an opening tag is finished.
+- **Block and inline layout**: block elements open out over three lines, inline elements close on the spot.
+- **Void elements**: elements that take no closing tag are left alone, or rewritten to close themselves.
+- **Attribute aware**: a `>` inside a quoted attribute value never reads as the end of a tag.
+- **Multiple cursors**: every cursor gets its own closing tag, in a single undo step.
+- **Grammar scoped**: only the grammars you list get closing tags, so a comparison in a script is safe.
 
-# Usage
+## Installation
 
-Under normal circumstances ending tags will be inserted on the same line for inline elements and with `\n\t\n` in between for block elements. This is determined by attaching an element of the given type to the window and checking it's calculated `display` value.
-You can use Force Inline and Force Block preferences to override this.
+To install `autoclose-html` search for _autoclose-html_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/autoclose-html`.
 
-# Bug Reports and Contributing
+## Commands
 
-If you find a bug, please feel free to file an issue. Please understand however that I have very little time to work on this anymore, so most feature requests will not be implemented.
+Commands available in `lumine-workspace`:
 
-Better than an issue, however, would be to try and fix it yourself and submit a PR.
+- `autoclose-html:toggle`: turn automatic closing on or off.
 
-If you are interested in helping maintain this library, please contact me. As I mentioned, I have very little time to devote to this anymore, so if someone has interest in helping to keep it maintained, I'm open to considering it.
+## Usage
 
+Closing tags are written for the grammars named in the `grammars` setting, which
+covers HTML, XML, EJS, ERB, Mustache, PHP and TSX out of the box. `source.js` is
+deliberately absent: in plain JavaScript a comparison such as `a < b > c` reads
+exactly like a tag, so add it only if you write JSX in `.js` files.
 
-# Options
+Whether a closing tag lands on its own line follows the element's default
+display, with `forceInline` and `forceBlock` to overrule it per element.
+Elements listed in `neverClose` take no closing tag at all and are instead
+rewritten to close themselves, so `<br>` becomes `<br />`.
 
-## Force Inline
+For closing a tag on demand rather than as you type — including one you opened
+much earlier — the `bracket-matcher` package's `close-tag` command does that.
 
-Elements in this comma delimited list will render their closing tags on the same line, even if they are block by default. You can set this to "*" to force all closing tags to render inline.
+## Contributing
 
-## Force Block
-
-Elements in this comma delimited list will render their closing tags after a tabbed line, even if they are inline by default. A value of "*" for Force Inline overrides all values in Force Block.
-
-## Never Close
-
-Elements in this comma delimited list should *not* render a closing tag
-
-## Make Never Close Elements Self Closing
-
-Will convert elements in Never Close list from `<br>` to `<br />`
-
-## Legacy/International Mode
-
-Enables the old style of completion detection using buffer events rather than keybindings.
-Atom doesn't work well currently with non-US/non-QUERTY keyboards and will not correctly
-fire events when '>' is pressed and/or fire events for entirely different keys.  **Please note that
-this mode is buggy (ie can complete after undo) and may not be compatible with new
-features and bug fixes in future releases, post-0.22.0** If/when the core issues behind
-keybindings not reporting correctly on international keyboards is solved this option will
-be removed.
-
-
-
-# Changelog
-
-#### 0.20.0
-- HTML (Jinja Templates), Ember HTMLBars, JavaScript with JSX added to default grammars, per user requests
-- Dispose events on deactivate (should prevent double closing after an upgrade in the future, although I don't think it will help for this release)
-- Added ability to use "*" for Force Inline Options
-- Some Readme cleanup
-
-#### 0.21.0
-- Fixed double closing after changing grammar
-
-#### 0.22.0
-- Better way of handling events, solves rebinding problems **and** having to define grammars to apply to
-
-#### 0.23.0
-- Added legacy mode for users having problems with event handling introduced in 0.22.0
-
-#### 0.24.0
-- Stopped self closing tags from auto closing
+Got ideas to make this package better, found a bug, or want to help add new features? Just drop your thoughts on GitHub. Any feedback is welcome!
