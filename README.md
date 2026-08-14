@@ -2,9 +2,7 @@
 
 Close HTML and XML tags automatically as you type.
 
-Finish an opening tag and its closing tag appears behind the cursor. Block
-elements get theirs on a line of its own with the cursor waiting, indented,
-between the two; inline elements get theirs right where the cursor already is.
+Finish an opening tag and its closing tag appears behind the cursor. Block elements get theirs on a line of its own with the cursor waiting, indented, between the two; inline elements get theirs right where the cursor already is.
 
 ## Features
 
@@ -17,7 +15,7 @@ between the two; inline elements get theirs right where the cursor already is.
 
 ## Installation
 
-To install `autoclose-html` search for _autoclose-html_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/autoclose-html`.
+To install `autoclose-html` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/autoclose-html`.
 
 ## Commands
 
@@ -27,18 +25,11 @@ Commands available in `lumine-workspace`:
 
 ## Usage
 
-Closing tags are written for the grammars named in the `grammars` setting, which
-covers HTML, XML, EJS, ERB, Mustache, PHP and TSX out of the box. `source.js` is
-deliberately absent: in plain JavaScript a comparison such as `a < b > c` reads
-exactly like a tag, so add it only if you write JSX in `.js` files.
+Closing tags are written for the grammars named in the `grammars` setting, which covers HTML, XML, EJS, ERB, Mustache, PHP and TSX out of the box. `source.js` is deliberately absent: in plain JavaScript a comparison such as `a < b > c` reads exactly like a tag, so add it only if you write JSX in `.js` files.
 
-Whether a closing tag lands on its own line follows the element's default
-display, with `forceInline` and `forceBlock` to overrule it per element.
-Elements listed in `neverClose` take no closing tag at all and are instead
-rewritten to close themselves, so `<br>` becomes `<br />`.
+Whether a closing tag lands on its own line follows the element's default display, with `forceInline` and `forceBlock` to overrule it per element. Elements listed in `neverClose` take no closing tag at all and are instead rewritten to close themselves, so `<br>` becomes `<br />`.
 
-For closing a tag on demand rather than as you type — including one you opened
-much earlier — the `bracket-matcher` package's `close-tag` command does that.
+For closing a tag on demand rather than as you type — including one you opened much earlier — the `bracket-matcher` package's `close-tag` command does that.
 
 ## Contributing
 
