@@ -18,9 +18,6 @@
   "engines": {
     "lumine": "^1.0.0"
   },
-  "backgroundTips": [
-    "You can have a closing tag written for you as soon as you finish typing an opening one."
-  ],
   "main": "./lib/main",
   "files": [
     "lib",
@@ -32,6 +29,13 @@
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
+  },
+  "providedServices": {
+    "background-tips.provider": {
+      "versions": {
+        "1.0.0": "provideBackgroundTips"
+      }
+    }
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
