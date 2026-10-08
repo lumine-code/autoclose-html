@@ -317,7 +317,13 @@ describe("autoclose-html", () => {
   });
 
   describe("teardown", () => {
-    for (const interruption of ["deactivation", "buffer change", "disabled setting"]) {
+    for (const interruption of [
+      "deactivation",
+      "buffer change",
+      "disabled setting",
+      "cursor movement",
+      "selection change",
+    ]) {
       it(`ignores a pending parse after ${interruption}`, async () => {
         const languageMode = editor.getBuffer().getLanguageMode();
         const originalWait = languageMode.atTransactionEnd;
@@ -334,6 +340,13 @@ describe("autoclose-html", () => {
             await lumine.packages.deactivatePackage("autoclose-html");
           } else if (interruption === "buffer change") {
             editor.insertText("x");
+          } else if (interruption === "cursor movement") {
+            editor.setCursorBufferPosition([0, 0]);
+          } else if (interruption === "selection change") {
+            editor.setSelectedBufferRange([
+              [0, 0],
+              [0, 3],
+            ]);
           } else {
             lumine.config.set("autoclose-html.enabled", false);
           }
@@ -341,6 +354,14 @@ describe("autoclose-html", () => {
           await flushMicrotasks();
 
           expect(editor.getText()).toBe(interruption === "buffer change" ? "<span>x" : "<span>");
+          if (interruption === "cursor movement") {
+            expect(editor.getCursorBufferPosition().toArray()).toEqual([0, 0]);
+          } else if (interruption === "selection change") {
+            expect(editor.getSelectedBufferRange().serialize()).toEqual([
+              [0, 0],
+              [0, 3],
+            ]);
+          }
         } finally {
           if (originalWait) languageMode.atTransactionEnd = originalWait;
           else delete languageMode.atTransactionEnd;
