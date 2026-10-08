@@ -2,6 +2,8 @@
 
 Close HTML and XML tags automatically as you type.
 
+Fork of [mattberkowitz/autoclose-html](https://github.com/mattberkowitz/autoclose-html).
+
 Finish an opening tag and its closing tag appears behind the cursor. Block elements get theirs on a line of its own with the cursor waiting, indented, between the two; inline elements get theirs right where the cursor already is.
 
 ## Features
