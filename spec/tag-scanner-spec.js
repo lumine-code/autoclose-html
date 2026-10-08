@@ -83,6 +83,30 @@ describe("tag-scanner", () => {
       expect(tagIn("a >")).toBe(null);
       expect(tagIn(">")).toBe(null);
     });
+
+    it("ignores an arrow inside an open JSX attribute expression", () => {
+      const text = "<button onClick={() =>";
+      expect(openingTagBefore(text, text.length, { jsx: true })).toBe(null);
+    });
+
+    it("finds the final delimiter after nested JSX attribute expressions", () => {
+      const text = '<button onClick={() => { return "}"; }} disabled={count > 1}>';
+      expect(openingTagBefore(text, text.length, { jsx: true })).toBe("button");
+    });
+
+    it("ignores braces and delimiters inside JSX strings, templates and comments", () => {
+      for (const text of [
+        '<button value={"\\"} >"}>',
+        "<button value={`text > ${count}`}>",
+        '<button callback={() => { /* } > */ return "ok"; }}>',
+      ]) {
+        expect(openingTagBefore(text, text.length, { jsx: true })).toBe("button");
+      }
+    });
+
+    it("keeps braces in ordinary HTML attribute values unchanged", () => {
+      expect(tagIn("<a data-value={text>")).toBe("a");
+    });
   });
 
   describe("isInline", () => {
