@@ -40,6 +40,8 @@ jobs:
         run: npm run lint
       - name: Check formatting
         run: npm run format:check
+      - name: Run scanner unit tests
+        run: npm run test:unit
 
   integration:
     # Run the Jasmine spec suite inside a real Lumine build; the specs drive the
