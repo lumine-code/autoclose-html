@@ -5,7 +5,26 @@
       "submenu": [
         {
           "label": "Autoclose HTML",
-          "submenu": [{ "label": "Toggle", "command": "autoclose-html:toggle" }]
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "autoclose-html:toggle"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "View",
+      "submenu": [
+        {
+          "label": "Editor",
+          "submenu": [
+            {
+              "label": "Toggle Automatic Closing Tags",
+              "command": "autoclose-html:toggle"
+            }
+          ]
         }
       ]
     }
