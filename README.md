@@ -15,6 +15,8 @@ Finish an opening tag and its closing tag appears behind the cursor. Block eleme
 - **Multiple cursors**: every cursor gets its own closing tag, in a single undo step.
 - **Grammar scoped**: only the grammars you list get closing tags, so a comparison in a script is safe.
 
+![Insert the matching closing tag as an opening tag is completed.](.github/demo.png)
+
 ## Installation
 
 To install `autoclose-html` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/autoclose-html`.

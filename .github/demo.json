@@ -1,0 +1,16 @@
+{
+  "title": "autoclose-html",
+  "description": "Insert the matching closing tag as an opening tag is completed.",
+  "recordedOn": "2026-10-13",
+  "sourceRevision": "92e73fc1acb926fc2d325f064919adc604b53774",
+  "mode": "normal",
+  "fontSettings": "default",
+  "images": [
+    {
+      "file": "demo.png",
+      "label": "Insert the matching closing tag as an opening tag is completed.",
+      "width": 1100,
+      "height": 340
+    }
+  ]
+}
