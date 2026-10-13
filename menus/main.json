@@ -22,7 +22,9 @@
           "submenu": [
             {
               "label": "Toggle Automatic Closing Tags",
-              "command": "autoclose-html:toggle"
+              "command": "autoclose-html:toggle",
+              "group": "editing",
+              "order": 10
             }
           ]
         }
