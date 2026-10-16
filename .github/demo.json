@@ -1,9 +1,9 @@
 {
   "title": "autoclose-html",
   "description": "Insert the matching closing tag as an opening tag is completed.",
-  "recordedOn": "2026-10-14",
-  "sourceRevision": "5381992546cb653294a4dcf177f621c0d4a25b42",
-  "themeSourceRevision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
+  "recordedOn": "2026-10-16",
+  "sourceRevision": "62ed2834ecaa51babce38e4f52b31b73d4838c3a",
+  "themeSourceRevision": "828c35ac1816466699effa6f7cf7eedccc930ff9",
   "mode": "normal",
   "fontSettings": "default",
   "scenario": "demo.js",
@@ -11,8 +11,8 @@
   "environment": {
     "platform": "win32",
     "arch": "x64",
-    "electron": "44.7.0",
-    "chrome": "152.0.7977.130",
+    "electron": "44.7.1",
+    "chrome": "152.0.7977.149",
     "devicePixelRatio": 1,
     "locale": "en-GB",
     "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
@@ -21,29 +21,30 @@
   },
   "viewport": { "width": 1100, "height": 340 },
   "cornerRadius": 10,
+  "privacy": { "version": 1, "location": "neutral", "textChecked": true },
   "sources": {
     "editor": {
-      "revision": "8be8f86075ad93df038610d82b3ac6d99329957d",
+      "revision": "cea00dcaab791b12d9e1f0322ff8687a31c962a7",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "package": {
-      "revision": "5381992546cb653294a4dcf177f621c0d4a25b42",
+      "revision": "62ed2834ecaa51babce38e4f52b31b73d4838c3a",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "autoclose-html": {
-      "revision": "5381992546cb653294a4dcf177f621c0d4a25b42",
+      "revision": "62ed2834ecaa51babce38e4f52b31b73d4838c3a",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "language-html": {
-      "revision": "4bde039b2fea095d4af994a8c37e55161a03174a",
+      "revision": "d417ced3ba1fbaf19ddb56afff083d960aa878e4",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "one-theme": {
-      "revision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
+      "revision": "828c35ac1816466699effa6f7cf7eedccc930ff9",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     }
@@ -60,7 +61,7 @@
       "label": "Insert the matching closing tag as an opening tag is completed.",
       "width": 1100,
       "height": 340,
-      "sha256": "ad314c3ae686df7a54b47ce254b9ca185da751d2815d7b16ec596a91b3bfba4f"
+      "sha256": "f6907e12a3df57e38bc0d28d2a217346cb6fd64fab54cd6cc97230ce7a849567"
     }
   ]
 }
