@@ -22,7 +22,8 @@
   "files": [
     "lib",
     "menus",
-    "spec"
+    "spec",
+    "THIRD_PARTY_NOTICES"
   ],
   "scripts": {
     "test": "lumine --test spec",
