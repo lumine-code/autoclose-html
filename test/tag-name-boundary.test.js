@@ -1,22 +1,22 @@
 const { test } = require("node:test");
 const assert = require("node:assert/strict");
-const { spawnSync } = require("node:child_process");
 const path = require("node:path");
 const { openingTagBefore } = require("../lib/tag-scanner");
+const runScannerChild = require("./helpers/scanner-child");
 
 for (const suffix of ["/>", " / data>"]) {
-  test(`reject a long tag name with ${suffix} within a bounded process`, () => {
-    const scanner = path.resolve(__dirname, "../lib/tag-scanner.js");
-    const code = `const scanner = require(${JSON.stringify(scanner)}); const line = "<" + "a".repeat(100000) + ${JSON.stringify(suffix)}; console.log(JSON.stringify(scanner.openingTagBefore(line, line.length)));`;
-    const result = spawnSync(process.execPath, ["-e", code], {
-      timeout: 2500,
-      windowsHide: true,
-      encoding: "utf8",
-    });
-    assert.equal(result.error, undefined, result.error?.message);
-    assert.equal(result.status, 0, result.stderr);
-    assert.equal(result.stdout.trim(), "null");
-  });
+  test(
+    `reject a long tag name with ${suffix} within a bounded process`,
+    { timeout: 15000 },
+    async () => {
+      const scanner = path.resolve(__dirname, "../lib/tag-scanner.js");
+      const code = `const scanner = require(process.argv[1]); const line = "<" + "a".repeat(100000) + ${JSON.stringify(suffix)}; console.log(JSON.stringify(scanner.openingTagBefore(line, line.length)));`;
+      const result = await runScannerChild(process.execPath, code, scanner);
+      assert.equal(result.error, undefined, result.error?.message);
+      assert.equal(result.status, 0, result.stderr);
+      assert.equal(result.stdout.trim(), "null");
+    },
+  );
 }
 
 test("preserve whole names, quoted attributes and previously rejected syntax", () => {
