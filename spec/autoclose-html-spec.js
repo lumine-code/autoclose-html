@@ -1,5 +1,5 @@
 describe("autoclose-html", () => {
-  let editor, workspaceElement;
+  let editor, workspaceElement, flush;
 
   // Types a `>` at `position` in `text` and waits out the microtask the package
   // defers its edit to.
@@ -10,13 +10,15 @@ describe("autoclose-html", () => {
     editor.insertText(">");
     await editor.getBuffer().getLanguageMode().atTransactionEnd?.();
     await flushMicrotasks();
+    await Promise.all(flush.calls.all().map((call) => call.returnValue));
   }
 
   beforeEach(async () => {
     workspaceElement = lumine.views.getView(lumine.workspace);
     jasmine.attachToDOM(workspaceElement);
 
-    await lumine.packages.activatePackage("autoclose-html");
+    const pack = await lumine.packages.activatePackage("autoclose-html");
+    flush = spyOn(pack.mainModule, "flush").and.callThrough();
     editor = await lumine.workspace.open();
 
     // Drive the real grammar gate rather than depending on a grammar package
