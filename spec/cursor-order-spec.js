@@ -62,4 +62,19 @@ describe("Autoclose HTML cursor creation order", () => {
     expect(editor.getText()).toBe("<span></span>");
     expect(editor.getCursorBufferPositions().map((p) => p.toArray())).toEqual([[0, 6]]);
   });
+
+  it("closes multiple tags on one row while preserving the last added cursor", async () => {
+    editor.setText("<span <span");
+    editor.setCursorBufferPosition([0, 11]);
+    editor.addCursorAtBufferPosition([0, 5]);
+    editor.insertText(">");
+    await conditionPromise(() => closed, "the same-row closing pass");
+    expect(editor.getText()).toBe("<span></span> <span></span>");
+    expect(editor.getCursorBufferPositions().map((p) => p.toArray())).toEqual([
+      [0, 20],
+      [0, 6],
+    ]);
+    editor.undo();
+    expect(editor.getText()).toBe("<span <span");
+  });
 });

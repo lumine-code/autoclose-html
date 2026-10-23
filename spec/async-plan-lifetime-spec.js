@@ -70,6 +70,54 @@ describe("Autoclose HTML asynchronous plan lifetime", () => {
     expect(editor.analyzeSyntax).not.toHaveBeenCalled();
   });
 
+  it("closes a pasted delimiter while retaining cursors that received different text", async () => {
+    editor.analyzeSyntax.and.callThrough();
+    editor.setText("<span\n<span");
+    editor.setCursorBufferPosition([0, 5]);
+    editor.addCursorAtBufferPosition([1, 5]);
+    await editor.pasteText({
+      autoIndent: false,
+      clipboard: {
+        readWithMetadata: () => ({
+          text: "x\n>",
+          metadata: { selections: [{ text: "x" }, { text: ">" }] },
+        }),
+      },
+    });
+    release?.();
+    await pending;
+    expect(editor.getText()).toBe("<spanx\n<span></span>");
+    expect(editor.getCursorBufferPositions().map((position) => position.toArray())).toEqual([
+      [0, 6],
+      [1, 6],
+    ]);
+    expect(editor.analyzeSyntax).toHaveBeenCalled();
+  });
+
+  it("retains a later mixed-paste cursor shifted by a closing tag on the same row", async () => {
+    editor.analyzeSyntax.and.callThrough();
+    editor.setText("<span <span");
+    editor.setCursorBufferPosition([0, 5]);
+    editor.addCursorAtBufferPosition([0, 11]);
+    await editor.pasteText({
+      autoIndent: false,
+      clipboard: {
+        readWithMetadata: () => ({
+          text: ">\nx",
+          metadata: { selections: [{ text: ">" }, { text: "x" }] },
+        }),
+      },
+    });
+    await pending;
+    expect(editor.getText()).toBe("<span></span> <spanx");
+    expect(editor.getCursorBufferPositions().map((position) => position.toArray())).toEqual([
+      [0, 6],
+      [0, 20],
+    ]);
+    editor.undo();
+    expect(editor.getText()).toBe("<span <span");
+  });
+
   it("cancels a syntax request when its editor closes", async () => {
     await start();
     editor.destroy();
