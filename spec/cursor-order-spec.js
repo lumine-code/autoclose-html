@@ -1,4 +1,9 @@
 describe("Autoclose HTML cursor creation order", () => {
+  // Processing fixtures use a real grammar; None deliberately disables this package.
+  beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
+  });
+
   let editor, main, closed;
 
   beforeEach(async () => {

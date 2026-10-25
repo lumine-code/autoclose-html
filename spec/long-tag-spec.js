@@ -1,4 +1,9 @@
 describe("Autoclose fallback long tag names", () => {
+  // Processing fixtures use a real grammar; None deliberately disables this package.
+  beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
+  });
+
   let main, editor;
   beforeEach(async () => {
     editor = await lumine.workspace.open();

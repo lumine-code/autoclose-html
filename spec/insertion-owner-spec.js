@@ -1,4 +1,9 @@
 describe("Autoclose insertion observer owner", () => {
+  // Processing fixtures use a real grammar; None deliberately disables this package.
+  beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
+  });
+
   let main, editor, interrupt, early, observedFlush;
   beforeEach(async () => {
     observedFlush = null;

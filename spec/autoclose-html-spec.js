@@ -1,4 +1,9 @@
 describe("autoclose-html", () => {
+  // Processing fixtures use a real grammar; None deliberately disables this package.
+  beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
+  });
+
   let editor, workspaceElement, flush;
 
   // Types a `>` at `position` in `text` and waits out the microtask the package
@@ -277,6 +282,7 @@ describe("autoclose-html", () => {
       editor.addCursorAtBufferPosition([1, 5]);
       editor.insertText(">");
       await flushMicrotasks();
+      await Promise.all(flush.calls.all().map((call) => call.returnValue));
 
       expect(editor.getText()).toBe("<div>\n  \n</div>\n<span></span>");
       expect(editor.getCursorBufferPositions().map((point) => point.toArray())).toEqual([
@@ -291,6 +297,7 @@ describe("autoclose-html", () => {
       editor.addCursorAtBufferPosition([1, 2]);
       editor.insertText(">");
       await flushMicrotasks();
+      await Promise.all(flush.calls.all().map((call) => call.returnValue));
 
       expect(editor.getText()).toBe("<span></span>\na >");
       expect(editor.getCursorBufferPositions().length).toBe(2);
@@ -327,10 +334,13 @@ describe("autoclose-html", () => {
       "selection change",
     ]) {
       it(`ignores a pending parse after ${interruption}`, async () => {
-        const languageMode = editor.getBuffer().getLanguageMode();
-        const originalWait = languageMode.atTransactionEnd;
         let finish;
-        languageMode.atTransactionEnd = () => new Promise((resolve) => (finish = resolve));
+        spyOn(editor, "analyzeSyntax").and.callFake(
+          () =>
+            new Promise((resolve) => {
+              finish = () => resolve([{ position: { row: 0, column: 6 }, tag: "span" }]);
+            }),
+        );
         try {
           editor.setText("<span");
           editor.setCursorBufferPosition([0, 5]);
@@ -354,6 +364,7 @@ describe("autoclose-html", () => {
           }
           finish();
           await flushMicrotasks();
+          await Promise.all(flush.calls.all().map((call) => call.returnValue));
 
           expect(editor.getText()).toBe(interruption === "buffer change" ? "<span>x" : "<span>");
           if (interruption === "cursor movement") {
@@ -365,8 +376,8 @@ describe("autoclose-html", () => {
             ]);
           }
         } finally {
-          if (originalWait) languageMode.atTransactionEnd = originalWait;
-          else delete languageMode.atTransactionEnd;
+          finish?.();
+          await Promise.all(flush.calls.all().map((call) => call.returnValue));
         }
       });
     }

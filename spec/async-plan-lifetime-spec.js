@@ -1,4 +1,9 @@
 describe("Autoclose HTML asynchronous plan lifetime", () => {
+  // Processing fixtures use a real grammar; None deliberately disables this package.
+  beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
+  });
+
   let editor, main, release, pending, request;
 
   beforeEach(async () => {
