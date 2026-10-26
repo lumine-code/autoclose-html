@@ -30,4 +30,24 @@ describe("autoclose-html with no grammar", () => {
       lumine.config.set("autoclose-html.grammars", scopes);
     }
   });
+
+  it("retires a queued insertion across None and accepts fresh typing after grammar restoration", async () => {
+    jasmine.useRealClock();
+    const grammar = editor.getGrammar();
+    editor.setText("<div");
+    editor.setCursorBufferPosition([0, 4]);
+    editor.insertText(">");
+    const analyze = spyOn(editor, "analyzeSyntax").and.callThrough();
+    editor.setGrammar(lumine.grammars.nullGrammar);
+    editor.setGrammar(grammar);
+    await flushMicrotasks();
+    expect(analyze).not.toHaveBeenCalled();
+    expect(editor.getText()).toBe("<div>");
+    editor.setText("<span");
+    editor.setCursorBufferPosition([0, 5]);
+    await editor.whenGrammarSettled();
+    editor.insertText(">");
+    await conditionPromise(() => editor.getText() === "<span></span>");
+    expect(analyze).toHaveBeenCalledTimes(1);
+  });
 });
