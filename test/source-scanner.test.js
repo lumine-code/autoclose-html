@@ -101,3 +101,16 @@ test("large work yields and cancellation terminates it before a plan can be retu
   controller.abort();
   await assert.rejects(pending, { name: "AbortError" });
 });
+
+test("escaped JSX strings cannot bypass cooperative checkpoints", async () => {
+  const text = "<a value={'" + "\\\\".repeat(1024 * 1024) + "'}>";
+  const controller = new AbortController();
+  const scanner = new SourceScanner(source(text), {
+    signal: controller.signal,
+    maxUnits: Infinity,
+    maxMilliseconds: Infinity,
+  });
+  const pending = scanner.run(scanner.opening(0, text.length, { jsx: true }));
+  controller.abort();
+  await assert.rejects(pending, { name: "AbortError" });
+});
