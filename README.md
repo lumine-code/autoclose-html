@@ -6,6 +6,8 @@ Fork of [mattberkowitz/autoclose-html](https://github.com/mattberkowitz/autoclos
 
 Finish an opening tag and its closing tag appears behind the cursor. Block elements get theirs on a line of its own with the cursor waiting, indented, between the two; inline elements get theirs right where the cursor already is.
 
+Automatic analysis reads immutable source blocks instead of copying the current line or the remaining document. Quoted attributes, JSX expressions, comments, CDATA, nested tags and raw-text elements retain their lexical context. Work yields after approximately four milliseconds and observes cancellation. A plan inspects at most 4 Mi UTF-16 unit reads, 16,384 markup tokens, 512 nested elements and 100 ms; automatic tag names are limited to 4,096 units, and automatic block indentation to 65,536 leading whitespace units. When any required context is unknown or exceeds these budgets, no automatic edit is made. An unscanned suffix is never treated as evidence that a closing tag is absent.
+
 ## Features
 
 - **Automatic closing**: writes the closing tag the moment an opening tag is finished.
